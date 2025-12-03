@@ -32,104 +32,25 @@ func main() {
 			if len(parts) == 0 { 
 				log.Fatal("invalid puzzle input")
 			}
-			startRaw := parts[0]
-			endRaw := parts[1]
 
-			start, _ := strconv.Atoi(startRaw)
-			end, _ := strconv.Atoi(endRaw)
+			start, _ := strconv.Atoi(parts[0])
+			end, _ := strconv.Atoi(parts[1])
 
 			for i := start; i <= end; i++ {
 				str := strconv.Itoa(i)
-
 				numDigits := len(str)
+
 				if numDigits == 1 {
 					continue
 				} 
 
-				if numDigits == 2 {
-					if isJustOneRepeatedDigit(str) {
-						answer1 += i
-						answer2 += i
-					}
-
-					continue
+				if isInvalid(str, false) {
+					answer1 += i
 				}
 
-				if numDigits % 2 == 0 {
-					divisors := []int{}
-
-					for j := (numDigits/2); j >= 2; j-- {
-						if numDigits % j == 0 {
-							divisors = append(divisors, j)
-						}
-					}
-
-					for _, divisor := range divisors {
-						chunkLength := divisor
-						numChunks := numDigits / chunkLength
-						shouldSkip := false
-
-						for chunkIdx := 0; chunkIdx < numChunks - 1; chunkIdx++ {
-							chunkRaw := str[(chunkIdx)*chunkLength:(chunkIdx+1)*chunkLength]
-							nextChunkRaw := str[(chunkIdx+1)*chunkLength:(chunkIdx+2)*chunkLength]
-
-							chunk, _ := strconv.Atoi(chunkRaw)
-							nextChunk, _ := strconv.Atoi(nextChunkRaw)
-
-							if chunk - nextChunk != 0 {
-								shouldSkip = true
-								break
-							}
-						}
-
-						if !shouldSkip {
-							if numChunks == 2 {
-								answer1 += i
-							}
-
-							answer2 += i
-							break
-						}
-					}
-				} else {
-					if isJustOneRepeatedDigit(str) { 
-						answer2 += i
-					}
-
-					divisors := []int{}
-					for j := (numDigits/2) - 1; j >= 3; j-- {
-						if numDigits % j == 0 {
-							divisors = append(divisors, j)
-						}
-					}
-
-					if len(divisors) == 0 {
-						continue
-					}
-
-					for _, divisor := range divisors {
-						chunkLength := divisor
-						numChunks := numDigits / chunkLength
-						noMatch := false
-
-						for chunkIdx := 0; chunkIdx < numChunks - 1; chunkIdx++ {
-							chunkRaw := str[(chunkIdx)*chunkLength:(chunkIdx+1)*chunkLength]
-							nextChunkRaw := str[(chunkIdx+1)*chunkLength:(chunkIdx+2)*chunkLength]
-
-							chunk, _ := strconv.Atoi(chunkRaw)
-							nextChunk, _ := strconv.Atoi(nextChunkRaw)
-
-							if chunk - nextChunk != 0 {
-								noMatch = true
-								break
-							}
-						}
-
-						if !noMatch {
-							answer2 += i
-						}
-					}
-				} 
+				if isInvalid(str, true) {
+					answer2 += i
+				}
 			}
 		}
 	}
@@ -142,12 +63,37 @@ func main() {
 	fmt.Println(answer2)
 }
 
-func isJustOneRepeatedDigit(s string) bool {
-	for i := 0; i < len(s) - 1; i++ {
-		if s[i] != s[i+1] {
-			return false
+func isInvalid(s string, part2 bool) bool {
+	numDigits := len(s)
+
+	start := 0
+	if part2 {
+		start = numDigits
+	} else {
+		start = 2
+	}
+
+	for i := start; i >= 2; i-- {
+		if numDigits % i == 0 {
+			numChunks := i
+			chunkLength := numDigits/i
+			shouldSkip := false
+
+			for j := 0; j < numChunks - 1; j++ {
+				lastChunk := s[numDigits-chunkLength:] 
+
+				if s[j*chunkLength:(j+1)*chunkLength] != lastChunk {
+					shouldSkip = true
+					break
+				}
+			}
+			
+			if !shouldSkip {
+				return true
+			}
 		}
 	}
 
-	return true
+	return false
 }
+
