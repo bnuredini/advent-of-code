@@ -71,8 +71,6 @@ func main() {
 		newStart := interval[0]
 		newEnd := interval[1]
 
-		fmt.Printf("[%v-%v]\n", start, end)
-
 		if newStart > end {
 			answer2 += (end - start) + 1
 
