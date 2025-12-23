@@ -1,10 +1,10 @@
 package main
 
 import (
-	"os"
+	"bufio"
 	"fmt"
 	"log"
-	"bufio"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -35,7 +35,7 @@ func main() {
 		}
 
 		if strings.ToUpper(string(direction)) == "L" {
-			oldPosition := position 
+			oldPosition := position
 			position = position - amount
 
 			if position == 0 {
@@ -47,15 +47,15 @@ func main() {
 					answer2 += 1
 				}
 
-				// Edge case: if the loop above ends at zero, it doesn't count the 
-				// last click since it just just counts the number of wraps. 
+				// Edge case: if the loop above ends at zero, it doesn't count the
+				// last click since it just just counts the number of wraps.
 				if position == 0 {
 					answer1 += 1
 					answer2 += 1
 				}
 
 				// Edge case: going from zero to a negative value shouldn't cause a
-				// click. But, the loop above does when it counts the number of 
+				// click. But, the loop above does when it counts the number of
 				// wraps.
 				if oldPosition == 0 && position > 0 {
 					answer2 -= 1
@@ -77,7 +77,7 @@ func main() {
 	if err := scanner.Err(); err != nil {
 		log.Fatalf("scanner error: %v", err)
 	}
-	
+
 	fmt.Println(answer1)
 	fmt.Println(answer2)
 }

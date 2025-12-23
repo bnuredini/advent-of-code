@@ -1,12 +1,12 @@
 package main
 
 import (
-	"os"
+	"bufio"
 	"fmt"
 	"log"
-	"bufio"
-	"strings"
+	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -24,12 +24,12 @@ func main() {
 		line := scanner.Text()
 		intervals := strings.Split(line, ",")
 		if len(intervals) == 0 {
-			continue 
+			continue
 		}
 
 		for _, interval := range intervals {
 			parts := strings.Split(interval, "-")
-			if len(parts) == 0 { 
+			if len(parts) == 0 {
 				log.Fatal("invalid puzzle input")
 			}
 
@@ -42,7 +42,7 @@ func main() {
 
 				if numDigits == 1 {
 					continue
-				} 
+				}
 
 				if isInvalid(str, false) {
 					answer1 += i
@@ -74,20 +74,20 @@ func isInvalid(s string, part2 bool) bool {
 	}
 
 	for i := start; i >= 2; i-- {
-		if numDigits % i == 0 {
+		if numDigits%i == 0 {
 			numChunks := i
-			chunkLength := numDigits/i
+			chunkLength := numDigits / i
 			shouldSkip := false
 
-			for j := 0; j < numChunks - 1; j++ {
-				lastChunk := s[numDigits-chunkLength:] 
+			for j := 0; j < numChunks-1; j++ {
+				lastChunk := s[numDigits-chunkLength:]
 
 				if s[j*chunkLength:(j+1)*chunkLength] != lastChunk {
 					shouldSkip = true
 					break
 				}
 			}
-			
+
 			if !shouldSkip {
 				return true
 			}
@@ -96,4 +96,3 @@ func isInvalid(s string, part2 bool) bool {
 
 	return false
 }
-

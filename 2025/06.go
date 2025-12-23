@@ -1,12 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
-	"bufio"
-	"strings"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -44,7 +44,7 @@ func main() {
 			if part == "+" || part == "*" {
 				colsWithAddition[colIdx] = (part == "+")
 				colIdx += 1
-			} else { 
+			} else {
 				num, _ := strconv.Atoi(part)
 				row = append(row, num)
 			}
@@ -57,7 +57,7 @@ func main() {
 
 	for colIdx := range len(mat1[0]) {
 		colValue := 0
-		usingAddition := colsWithAddition[colIdx] 
+		usingAddition := colsWithAddition[colIdx]
 
 		if !usingAddition {
 			colValue = 1
@@ -73,7 +73,7 @@ func main() {
 
 		answer1 += colValue
 	}
-	
+
 	mat2 := [][]int{}
 	numLineCols := len(lines[0])
 	numLineRows := len(lines)
@@ -81,7 +81,7 @@ func main() {
 	row := []int{}
 
 	for colIdx := range numLineCols {
-		lastColCell := lines[numLineRows - 1][colIdx] 
+		lastColCell := lines[numLineRows-1][colIdx]
 
 		if colIdx != 0 && (lastColCell == '+' || lastColCell == '*') {
 			mat2 = append(mat2, row)
@@ -109,7 +109,7 @@ func main() {
 
 	for i, nums := range mat2 {
 		value := 0
-		usingAddition := colsWithAddition[i] 
+		usingAddition := colsWithAddition[i]
 
 		if !usingAddition {
 			value = 1

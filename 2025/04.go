@@ -3,8 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"log"
+	"os"
 )
 
 func main() {
@@ -63,20 +63,19 @@ func getRolls(mat [][]bool, part2 bool) int {
 					continue
 				}
 
-				score := 0 
+				score := 0
 
-				score += getScore(mat, rowIdx - 1, colIdx - 1)
-				score += getScore(mat, rowIdx - 1, colIdx)
-				score += getScore(mat, rowIdx - 1, colIdx + 1)
+				score += getScore(mat, rowIdx-1, colIdx-1)
+				score += getScore(mat, rowIdx-1, colIdx)
+				score += getScore(mat, rowIdx-1, colIdx+1)
 
-				score += getScore(mat, rowIdx, colIdx - 1)
-				score += getScore(mat, rowIdx, colIdx + 1)
+				score += getScore(mat, rowIdx, colIdx-1)
+				score += getScore(mat, rowIdx, colIdx+1)
 
-				score += getScore(mat, rowIdx + 1, colIdx - 1)
-				score += getScore(mat, rowIdx + 1, colIdx)
-				score += getScore(mat, rowIdx + 1, colIdx + 1)
+				score += getScore(mat, rowIdx+1, colIdx-1)
+				score += getScore(mat, rowIdx+1, colIdx)
+				score += getScore(mat, rowIdx+1, colIdx+1)
 
-				
 				if score < 4 {
 					result += 1
 					idxRowToRemove = append(idxRowToRemove, colIdx)
@@ -87,10 +86,10 @@ func getRolls(mat [][]bool, part2 bool) int {
 		}
 
 		if !part2 {
-			// One pass-through the matrix is enough for part #1. Whereas, for 
-			// part #2, multiple pass-through are required until no more rolls 
+			// One pass-through the matrix is enough for part #1. Whereas, for
+			// part #2, multiple pass-through are required until no more rolls
 			// can be removed.
-			running = false 
+			running = false
 			break
 		}
 
@@ -101,7 +100,7 @@ func getRolls(mat [][]bool, part2 bool) int {
 		}
 
 		if prevResult == result {
-			running = false 
+			running = false
 		}
 
 		prevResult = result
@@ -116,7 +115,7 @@ func getScore(mat [][]bool, rowIdx, colIdx int) int {
 	}
 
 	if rowIdx < 0 || rowIdx >= len(mat) {
-		return 0 
+		return 0
 	}
 
 	if colIdx < 0 || colIdx >= len(mat[0]) {
@@ -129,4 +128,3 @@ func getScore(mat [][]bool, rowIdx, colIdx int) int {
 
 	return 0
 }
-

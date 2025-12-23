@@ -1,11 +1,11 @@
 package main
 
 import (
-	"os"
-	"fmt"
 	"bufio"
+	"fmt"
 	"log"
 	"math"
+	"os"
 )
 
 func main() {
@@ -53,8 +53,8 @@ func getJoltage(line string, numBanks int) int64 {
 			}
 		}
 
-		result += int64(max - '0') * int64(math.Pow(10.0, float64(i - 1)))
+		result += int64(max-'0') * int64(math.Pow(10.0, float64(i-1)))
 	}
 
-	return result 
+	return result
 }
